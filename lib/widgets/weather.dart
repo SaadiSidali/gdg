@@ -50,7 +50,7 @@ class WeatherState extends State<Weather> {
       builder: (_context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting)
           return CircularProgressIndicator(
-            backgroundColor: Colors.red,
+            backgroundColor: Colors.white,
           );
         else {
           print(weatherIcon);
@@ -108,8 +108,11 @@ class WeatherWidgetState extends State<WeatherWidget> {
                   width: 3,
                   color: Colors.white,
                 ),
+                SizedBox(
+                  width: 10,
+                ),
                 Text(
-                  widget.degree.round().toString(),
+                  '${widget.degree.round()}°',
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 30,

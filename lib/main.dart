@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:gdg_app/widgets/Quote.dart';
+import 'package:gdg_app/widgets/greetings.dart';
+import 'package:gdg_app/widgets/todayFocus.dart';
 import 'package:intl/intl.dart';
 import './widgets/weather.dart';
 
@@ -39,9 +42,10 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Stack(
           children: [
             Container(
-              child: Image.network(
-                'https://i.redd.it/wd67c1smj7741.jpg',
+              child: FadeInImage(
                 fit: BoxFit.cover,
+                placeholder: AssetImage('assets/images/image.jpg'),
+                image: NetworkImage('https://i.redd.it/cx37grsl6i741.jpg'),
               ),
               height: double.infinity,
             ),
@@ -54,30 +58,18 @@ class _MyHomePageState extends State<MyHomePage> {
                     Weather(),
                   ],
                 ),
-
-                Expanded(flex: 7,
+                Expanded(
+                  flex: 7,
                   child: Column(
-                           mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Text(
-                        'Good evening, Sidali',
-                        style: TextStyle(
-                            fontFamily: 'Segoe',
-                            fontSize: 60,
-                            color: Colors.white,
-                            shadows: [
-                              Shadow(color: Colors.black, blurRadius: 12)
-                            ]),
-                        textAlign: TextAlign.center,
-                      ),
                       Clock(),
+                      Greetings(),
+                      TodayFocus(),
                     ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text('Nigga'),
-                )
+                Quote()
               ],
             ),
           ],
