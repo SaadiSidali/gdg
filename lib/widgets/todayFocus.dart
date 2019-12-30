@@ -6,18 +6,27 @@ class TodayFocus extends StatefulWidget {
 }
 
 class TtodayFocusState extends State<TodayFocus> {
+
+  var _stringValue = '';
+
   final _controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width - 200,
+      width: MediaQuery.of(context).size.width - 100,
       child: TextField(
+        onSubmitted: (value) {
+          _stringValue = value;
+          _controller.text = '';
+          FocusScope.of(context).requestFocus(FocusNode());
+        },
         scrollPadding: EdgeInsets.all(8),
         decoration: InputDecoration(
+          
             hintStyle: TextStyle(
                 fontFamily: 'Segoe',
                 fontSize: 20,
-                color: Colors.white60,
+                color: Colors.white70,
                 shadows: [Shadow(color: Colors.black, blurRadius: 3)]),
             hintText: 'What\'s your main focus for today',
             focusColor: Colors.white),

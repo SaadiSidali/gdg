@@ -13,20 +13,22 @@ class _GreetingsState extends State<Greetings> {
     setState(() {
       name = prefs.getString('name') ?? 'Pal';
     });
-    await prefs.setString('name', 'sidali');
   }
 
   @override
   Widget build(BuildContext context) {
     getname();
-    return Text(
-      'Good evening, $name',
-      style: TextStyle(
-          fontFamily: 'Segoe',
-          fontSize: 60,
-          color: Colors.white,
-          shadows: [Shadow(color: Colors.black, blurRadius: 12)]),
-      textAlign: TextAlign.center,
+    return Container(
+      padding: EdgeInsets.all(16),
+      child: Text(
+        'Good evening, $name.',
+        style: TextStyle(
+            fontFamily: 'Segoe',
+            fontSize: 45,
+            color: Colors.white,
+            shadows: [Shadow(color: Colors.black, blurRadius: 12)]),
+        textAlign: TextAlign.center,
+      ),
     );
   }
 }

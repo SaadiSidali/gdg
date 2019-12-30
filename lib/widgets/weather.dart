@@ -48,11 +48,14 @@ class WeatherState extends State<Weather> {
     return FutureBuilder(
       future: weather(),
       builder: (_context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting)
-          return CircularProgressIndicator(
-            backgroundColor: Colors.white,
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Container(
+            padding: EdgeInsets.all(20),
+            child: CircularProgressIndicator(
+              backgroundColor: Colors.white,
+            ),
           );
-        else {
+        } else {
           print(weatherIcon);
           return Container(
             child: WeatherWidget(
@@ -111,25 +114,30 @@ class WeatherWidgetState extends State<WeatherWidget> {
                 SizedBox(
                   width: 10,
                 ),
-                Text(
-                  '${widget.degree.round()}°',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 30,
-                      shadows: [Shadow(color: Colors.black, blurRadius: 4)]),
+                Column(
+                  children: <Widget>[
+                    Text(
+                      '${widget.degree.round()}°',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 30,
+                          shadows: [
+                            Shadow(color: Colors.black, blurRadius: 4)
+                          ]),
+                    ),
+                    Text(
+                      widget.location,
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          shadows: [
+                            Shadow(color: Colors.black, blurRadius: 3)
+                          ]),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
                 ),
               ],
-            ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Text(
-                widget.location,
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    shadows: [Shadow(color: Colors.black, blurRadius: 3)]),
-                textAlign: TextAlign.center,
-              ),
             ),
           ],
         ),

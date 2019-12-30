@@ -1,26 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:gdg_app/widgets/Quote.dart';
-import 'package:gdg_app/widgets/greetings.dart';
-import 'package:gdg_app/widgets/todayFocus.dart';
-import 'package:intl/intl.dart';
-import './widgets/weather.dart';
-
-import './widgets/clock.dart';
+import 'package:gdg_app/providers/auth.dart';
+import 'package:gdg_app/screens/firstScreen.dart';
+import 'package:gdg_app/screens/splash.dart';
+import 'package:gdg_app/screens/theTasksScreen.dart';
+import 'package:provider/provider.dart';
+import './screens/secondScreen.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIOverlays([]);
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
+    return MultiProvider(
+      child: Consumer<Auth>(
+        builder: (ctx, auth, _) => MaterialApp(
+          routes: {
+            TasksScreen.routeName: (ctx) => TasksScreen(),
+          },
+          debugShowCheckedModeBanner: false,
+          home: auth.isAuth
+              ? SecondScreen()
+              : FutureBuilder(
+                  future: auth.tryAutoLogin(),
+                  builder: (ctx, autoResultSnapshot) =>
+                      autoResultSnapshot.connectionState ==
+                              ConnectionState.waiting
+                          ? SplashScreen()
+                          : FirstScreen(),
+                ),
+        ),
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      providers: [
+        ChangeNotifierProvider.value(
+          value: Auth(),
+        )
+      ],
     );
   }
 }
@@ -36,45 +52,5 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Stack(
-          children: [
-            Container(
-              child: FadeInImage(
-                fit: BoxFit.cover,
-                placeholder: AssetImage('assets/images/image.jpg'),
-                image: NetworkImage('https://i.redd.it/cx37grsl6i741.jpg'),
-              ),
-              height: double.infinity,
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    Weather(),
-                  ],
-                ),
-                Expanded(
-                  flex: 7,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Clock(),
-                      Greetings(),
-                      TodayFocus(),
-                    ],
-                  ),
-                ),
-                Quote()
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+  Widget build(BuildContext context) {}
 }
