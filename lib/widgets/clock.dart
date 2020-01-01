@@ -16,6 +16,10 @@ class _ClockState extends State<Clock> {
     Timer.periodic(Duration(seconds: 1), (Timer t) => _getTime());
     super.initState();
   }
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

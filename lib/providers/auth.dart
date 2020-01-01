@@ -79,7 +79,9 @@ class Auth with ChangeNotifier {
     return _authenticate(email, password, 'signUp');
   }
 
-  Future<void> signin(String email, String password) async {
+  Future<void> signin(String email, String password,String name) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString('name', name);
     return _authenticate(email, password, 'signInWithPassword');
   }
 

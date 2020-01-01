@@ -45,20 +45,13 @@ class SecondScreen extends StatelessWidget {
                     Weather(),
                   ],
                 ),
-                GestureDetector(
-                  onVerticalDragDown: (f) {
-                    Navigator.of(context).pushNamed(
-                      TasksScreen.routeName,
-                    );
-                  },
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      FittedBox(child: Clock()),
-                      Greetings(),
-                      TodayFocus(),
-                    ],
-                  ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    FittedBox(child: Clock()),
+                    Greetings(),
+                    TodayFocus(),
+                  ],
                 ),
                 Quote()
               ],

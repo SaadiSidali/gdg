@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gdg_app/providers/auth.dart';
+import 'package:gdg_app/providers/quoteProvider.dart';
 import 'package:gdg_app/screens/firstScreen.dart';
 import 'package:gdg_app/screens/splash.dart';
 import 'package:gdg_app/screens/theTasksScreen.dart';
@@ -23,7 +24,11 @@ class MyApp extends StatelessWidget {
           home: auth.isAuth
               ? SecondScreen()
               : FutureBuilder(
-                  future: auth.tryAutoLogin(),
+                  future: Future.delayed(
+                    Duration(seconds: 3),
+                  ).then((onValue) {
+                    auth.tryAutoLogin();
+                  }),
                   builder: (ctx, autoResultSnapshot) =>
                       autoResultSnapshot.connectionState ==
                               ConnectionState.waiting
@@ -34,23 +39,12 @@ class MyApp extends StatelessWidget {
       ),
       providers: [
         ChangeNotifierProvider.value(
+          value: QuoteProvider(),
+        ),
+        ChangeNotifierProvider.value(
           value: Auth(),
         )
       ],
     );
   }
-}
-
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {}
 }
